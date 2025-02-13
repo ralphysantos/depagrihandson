@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Comment;
+use App\Models\Post;
 class CommentController extends Controller
 {
     public function create(Request $request){
         $request->validate([
+            'user_id' => 'required',
             'post_id' => 'required',
-            'content' => 'required'
+            'body' => 'required'
         ]);
 
-        $post = auth()->user()->posts()->find($request->post_id);
+        $post = Post::find($request->post_id);
 
         if(!$post){
             return response()->json([
@@ -28,7 +30,7 @@ class CommentController extends Controller
     }
 
     public function update(Request $request, $id){
-        $comment = auth()->user()->comments()->find($id);
+        $comment = Comment::find($id);
 
         if(!$comment){
             return response()->json([
@@ -44,7 +46,7 @@ class CommentController extends Controller
     }
 
     public function delete($id){
-        $comment = auth()->user()->comments()->find($id);
+        $comment = Comment::find($id);
 
         if(!$comment){
             return response()->json([
