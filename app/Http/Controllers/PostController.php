@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -57,7 +58,7 @@ class PostController extends Controller
     }
 
     public function view(){
-        $posts = posts()->with('comments')->all();
+        $posts = Post::with('comments')->all();
 
         return response()->json([
             'posts' => $posts
