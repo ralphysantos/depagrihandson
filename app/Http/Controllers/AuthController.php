@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function login(AuthRequest $request)
+    public function login(Request $request)
     {
 
         $credentials = $request->only(['email','password']);
@@ -23,7 +23,7 @@ class AuthController extends Controller
 
         return response()->json([
             'token' => $token
-        ],200);
+        ],201);
 
     }
 
