@@ -10,10 +10,14 @@ class PostController extends Controller
     public function create(Request $request){
         $request->validate([
             'title' => 'required',
-            'content' => 'required'
+            'body' => 'required'
         ]);
 
-        $post = auth()->user()->posts()->create($request->all());
+        $post = auth()->user()->posts()->create([
+            'user_id' => auth()->id(),
+            'title' => $request->title,
+            'body' => $request->body
+        ]);
 
         return response()->json([
             'post' => $post
