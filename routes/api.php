@@ -29,6 +29,14 @@ Route::post('/register',[UserController::class,'register']);
 
 
 Route::middleware(['auth:sanctum'])->group(function(){
+
+    Route::post('/logout',[AuthController::class,'logout']);
+
+    Route::prefix('user')->middleware(['isAdmin'])->group(function(){
+        Route::get('/view',[UserController::class,'view']);
+        Route::post('/assign-role/{id}',[UserController::class,'assignRole']);
+    });
+
     Route::prefix('post')->middleware(['isAdmin'])->group(function(){
         Route::get('/view',[PostController::class,'view']);
         Route::post('/create',[PostController::class,'create']);
